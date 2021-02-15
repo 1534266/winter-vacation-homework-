@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>table切换</title>
+
+    <style type="text/css">
+        * {
+            padding: 0;
+        }
+        
+        button {
+            width: 95px;
+        }
+        
+        .active {
+            background-color: yellow;
+        }
+        
+        #wrap {
+            width: 510px;
+            overflow: hidden;
+            margin: 0 auto;
+        }
+        
+        #inner {
+            width: 9999px;
+            overflow: hidden;
+            position: relative;
+            left: 0;
+            transition: left 0.6s;
+        }
+        
+        #inner a {
+            float: left;
+        }
+        
+        #inner img {
+            display: block;
+            width: 510px;
+        }
+        
+        #main {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrap">
+        <div id="inner">
+            <a href="###"><img src="./images/001.JPG" /></a>
+
+            <a href="###"><img src="./images/002.JPG" /></a>
+
+            <a href="###"><img src="./images/003.JPG" /></a>
+
+            <a href="###"><img src="./images/004.JPG" /></a>
+
+            <a href="###"><img src="./images/005.JPG" /></a>
+        </div>
+    </div>
+
+    <div id="main">
+        <button class="active">1</button>          <button>2</button>
+        <button>3</button>          <button>4</button>          <button>5</button>
+    </div>
+
+    <script type="text/javascript">
+        //获取节点
+        var btnList = document.getElementsByTagName('button')
+        var inner = document.getElementById('inner') //可见宽度
+        var perWidth = inner.children[0].offsetWidth //添加事件 //循环调用事件包装成函数tab
+        function tab() {
+            inner.style.left = -perWidth * this.index + 'px'
+            for (var j = 0; j < btnList.length; j++) {
+                btnList[j].className = ''
+            }
+            btnList[index].className = 'active'
+        }
+        for (var i = 0; i < btnList.length; i++) {
+            btnList[i].index = i
+            btnList[i].onclick = function() {
+                index = this.index
+                tab()
+            }
+        }
+        var index = 0
+
+        function prom() {
+            index++
+            if (index > btnList.length - 1) {
+                index = 0
+            }
+            tab()
+        }
+        var timer = setInterval(prom, 2000)
+        inner.onmouseover = function() {
+            // alert("鼠标移入");
+            clearInterval(timer)
+        }
+        inner.onmouseout = function() {
+            // alert("鼠标移出");
+            timer = setInterval(prom, 2000)
+        }
+    </script>
+</body>
+
+</html>
